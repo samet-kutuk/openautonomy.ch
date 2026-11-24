@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Open Autonomy</title>
+<meta name="description" content="Open Autonomy builds Phoenix, the autonomy compiler for vehicle makers and fleet operators: anyone who moves people, goods or materials. Own Your AI Driver.">
+<style>
+@font-face{font-family:"Barlow";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/barlow-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/barlow-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/barlow-condensed-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Barlow Condensed";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/barlow-condensed-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:300;font-display:swap;src:url(fonts/montserrat-latin-300-normal.woff2) format("woff2")}
+@font-face{font-family:"Montserrat";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/montserrat-latin-500-normal.woff2) format("woff2")}
+:root{
+  --bg:#F6F7FB; --bg2:#E9ECF4; --panel:#FFFFFF; --line:#C3C9DB; --chip:#E6E9F2; --navy:#0F193B; --amber-fill:#F2B632;
+  --fg:#0F193B; --muted:#4A5578; --dim:#5E6A93; --amber:#A86F00; --red:#E8413C; --green:#5DC46D; --ribbon:#E4572E;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Barlow,"Helvetica Neue",Arial,sans-serif;font-size:18px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+a{color:var(--amber)}
+h1,h2,h3{font-family:"Barlow Condensed","Arial Narrow",Arial,sans-serif;font-weight:700;line-height:1.02;margin:0;text-wrap:balance}
+p{margin:0}
+.eyebrow{font-size:14px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;padding-block:14px;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
+.brand span{font-family:Montserrat,Arial,sans-serif;letter-spacing:.12em;font-size:17px;white-space:nowrap}
+.brand b{font-weight:500}.brand i{font-style:normal;font-weight:300}
+.btn{display:inline-block;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:20px;letter-spacing:.02em;text-decoration:none;color:var(--navy);background:var(--amber-fill);padding:10px 22px;border-radius:6px;border:0;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+
+/* hero */
+.hero{background:linear-gradient(180deg,#FFFFFF 0%,var(--bg2) 100%);padding-block:96px 104px;position:relative;overflow:hidden}
+.hero .rings{position:absolute;right:-120px;top:40px;width:560px;max-width:70vw;opacity:.35;pointer-events:none}
+.hero .wrap{position:relative;display:flex;flex-direction:column;gap:28px}
+.ribbon{align-self:flex-start;font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:20px;color:#fff;background:var(--ribbon);padding:6px 16px;border-radius:5px}
+.hero h1{font-size:clamp(56px,11vw,128px)}
+.hero h1 em{font-style:normal;color:var(--amber)}
+.hero .lead{font-size:clamp(20px,2.4vw,26px);color:var(--muted);max-width:30em}
+.hero .cta{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.phx-row{display:flex;align-items:center;gap:14px}
+.phx{width:96px;height:auto;flex:none;animation:phx-breathe 6s ease-in-out infinite}
+@keyframes phx-breathe{0%,100%{filter:drop-shadow(0 0 6px rgba(242,182,50,.25))}50%{filter:drop-shadow(0 0 18px rgba(232,65,60,.45))}}
+@media (prefers-reduced-motion:reduce){.phx{animation:none}}
+
+section.band{padding-block:88px}
+section.alt{background:var(--bg2)}
+.head{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.head p{max-width:44em}
+.head h2{font-size:clamp(40px,6vw,64px)}
+.head p{color:var(--muted);font-size:20px}
+.head .eyebrow{color:var(--amber);font-size:14px}
+
+/* problem */
+.trio{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{box-shadow:0 1px 2px rgba(15,25,59,.06);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{font-size:30px}
+.card p{color:var(--muted)}
+.card.n{border-top:4px solid var(--navy)}.card.r{border-top:4px solid var(--red)}.card.a{border-top:4px solid var(--amber-fill)}.card.g{border-top:4px solid var(--green)}
+
+/* category */
+.statement{background:linear-gradient(180deg,#FFF6E0 0%,#FCEBC2 100%);padding-block:104px}
+.statement h2{font-size:clamp(48px,8vw,96px);color:var(--amber)}
+.statement .wrap{display:flex;flex-direction:column;gap:24px}
+.statement p{font-size:clamp(20px,2.4vw,26px);max-width:34em}
+.statement .line{color:var(--amber);font-weight:600}
+
+/* flow */
+.flow{display:grid;grid-template-columns:1fr auto 1.4fr auto 1fr;gap:16px;align-items:stretch}
+.flow .step{background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.flow .step.core{background:#FFF6E0;border-color:var(--amber-fill);border-width:2px}
+.flow .step span{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:600}
+.flow .step strong{font-family:"Barlow Condensed",Arial,sans-serif;font-size:26px;line-height:1.1}
+.flow .step p{color:var(--muted);font-size:16px;line-height:1.45}
+.flow .step em{font-style:normal;color:var(--amber);font-weight:600}
+.flow .arrow{align-self:center;color:var(--amber);font-size:28px}
+@media (max-width:760px){.flow{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg);justify-self:center}}
+
+/* audience */
+.who{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.who .card h3{font-size:28px}
+
+/* signup */
+.signup{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
+@media (max-width:860px){.signup{grid-template-columns:1fr}}
+.signup .head{margin:0}
+.formbox{min-width:0}
+.hs-form-frame{border-radius:12px;overflow:hidden}
+.formbox .pending{color:var(--muted)}
+/* HubSpot embedded form (rendered into the page with css:"" so these rules apply) */
+.formbox .hs-form fieldset{max-width:none!important}
+.formbox .hs-form .hs-form-field{margin-bottom:16px}
+.formbox .hs-form label{display:block;font-size:15px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.formbox .hs-form .hs-input:not([type=checkbox]):not([type=radio]){width:100%!important;font:inherit;color:var(--fg);background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:11px 12px}
+.formbox .hs-form .hs-input:focus{outline:2px solid var(--amber);outline-offset:1px}
+.formbox .hs-form ul.inputs-list{list-style:none;padding:0;margin:0}
+.formbox .hs-form .hs-error-msgs{list-style:none;padding:0;margin:6px 0 0;color:#C62828;font-size:14px}
+.formbox .hs-form .legal-consent-container{font-size:14px;color:var(--dim)}
+.formbox .hs-form .hs-button{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:20px;color:var(--navy);background:var(--amber-fill);border:0;border-radius:6px;padding:12px 26px;cursor:pointer;margin-top:8px}
+.formbox .submitted-message{color:var(--fg);font-size:20px}
+
+/* market */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.stat strong{font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(38px,3.6vw,46px);white-space:nowrap;line-height:1;color:var(--amber)}
+.stat p{color:var(--muted);font-size:17px}
+.takeaway{margin-top:32px;font-size:clamp(20px,2.4vw,24px);text-wrap:pretty}
+.takeaway b{color:var(--amber)}
+.src{margin-top:16px;font-size:14px;color:var(--dim)}
+.closing{margin-top:32px;font-family:"Barlow Condensed",Arial,sans-serif;font-size:clamp(26px,3.4vw,34px);color:var(--amber)}
+.gap{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.gap span{font-family:"Barlow Condensed",Arial,sans-serif;font-weight:700;font-size:22px;color:var(--navy);background:var(--amber-fill);padding:6px 14px;border-radius:6px}
+.note{margin-top:28px;color:var(--muted);font-size:17px;max-width:46em}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding-block:48px 56px;color:var(--dim);font-size:15px}
+footer .wrap{display:flex;flex-direction:column;gap:28px}
+footer .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer nav{display:flex;gap:20px}
+footer a{color:var(--muted)}
+details{border-top:1px solid var(--line);padding-top:16px}
+details summary{cursor:pointer;color:var(--muted);font-weight:600}
+details .legal{margin-top:14px;display:flex;flex-direction:column;gap:10px;max-width:46em}
+#consent{position:fixed;left:16px;right:16px;bottom:16px;z-index:50;max-width:640px;margin-inline:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 28px rgba(15,25,59,.16);padding:16px 18px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;color:var(--fg);font-size:15px}
+#consent[hidden]{display:none}
+#consent p{flex:1 1 260px;margin:0}
+#consent .actions{display:flex;gap:10px}
+#consent .btn{font-size:17px;padding:7px 16px}
+#consent .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+details .legal h3{font-family:Barlow,Arial,sans-serif;font-size:16px;font-weight:600;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Open Autonomy, home">
+      <svg width="36" height="32" viewBox="0 0 100 90" aria-hidden="true"><g stroke-width="7" stroke-linejoin="round"><polygon points="50,48 92,64 50,80 8,64" fill="#5DC46D" fill-opacity="0.3" stroke="#5DC46D"/><polygon points="50,30 92,46 50,62 8,46" fill="#F2B632" fill-opacity="0.3" stroke="#F2B632"/><polygon points="50,12 92,28 50,44 8,28" fill="#E8413C" fill-opacity="0.35" stroke="#E8413C"/></g></svg>
+      <span><i>OPEN</i><b>AUTONOMY</b></span>
+    </a>
+    <a class="btn" href="#signup">Stay in the loop</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <svg class="rings" viewBox="0 0 100 90" aria-hidden="true"><g stroke-width="2" stroke-linejoin="round" fill="none"><polygon points="50,48 92,64 50,80 8,64" stroke="#5DC46D"/><polygon points="50,30 92,46 50,62 8,46" stroke="#F2B632"/><polygon points="50,12 92,28 50,44 8,28" stroke="#E8413C"/></g></svg>
+    <div class="wrap">
+      <p class="ribbon">Pre-seed round now open</p>
+      <h1>Own Your <em>AI Driver.</em></h1>
+      <p class="lead">Phoenix is the autonomy compiler for vehicle makers and fleet operators: anyone who moves people, goods or materials.</p>
+      <div class="cta">
+        <a class="btn" href="#signup">Get early access</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">The problem</p>
+        <h2>Makers and operators do the hard part.<br>Then someone else owns the AI driver.</h2>
+      </div>
+      <div class="trio">
+        <div class="card r"><h3>Building for others</h3><p>Vehicle makers build the vehicles and fleet operators run them, while the proprietary stack builders own the autonomy and capitalise on it.</p></div>
+        <div class="card a"><h3>All the risk, a thin cut</h3><p>They carry the operational, safety and liability risk of every vehicle on the road, and still fight for a thin cut of every ride and every load.</p></div>
+        <div class="card g"><h3>No sovereignty</h3><p>Driver, data and roadmap depend on a supplier. One export rule or one supplier’s decision can stop a fleet within weeks.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Why now</p>
+        <h2>Three things arrived in the same twelve months.</h2>
+      </div>
+      <div class="trio">
+        <div class="card r"><h3>Agents write the software</h3><p>At leading software companies, agents now write most of the code, and automotive toolmakers turn requirements into safety-compliant code in minutes.</p></div>
+        <div class="card a"><h3>Rules and commerce</h3><p>EU type approval, Swiss driverless operation since 2025 and UN rules from 2027. And robotaxis are now ordered by the tens of thousands.</p></div>
+        <div class="card g"><h3>Open, at frontier level</h3><p>Open stacks and open driving models are now almost as good as the frontier ones, and anyone can own and run them, on any compute.</p></div>
+      </div>
+      <p class="closing">What is missing is the company that puts them together.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">The market</p>
+        <h2>Fleets are ordered by the tens of thousands.</h2>
+      </div>
+      <div class="stats">
+        <div class="stat"><strong>25,000+</strong><p>Lucid robotaxis Bolt plans for Europe, on NVIDIA’s driver stack.</p></div>
+        <div class="stat"><strong>35,000+</strong><p>Lucid robotaxis Uber will buy for the US. Nuro owns the driver and earns a fee on every mile.</p></div>
+        <div class="stat"><strong>10,000+</strong><p>VW ID. Buzz robotaxis worldwide by 2031, with May Mobility’s driver kit.</p></div>
+        <div class="stat"><strong>1,000,000</strong><p>Cybercabs a year Tesla may build at Giga Berlin from 2029. Tesla owns the vehicle and the driver.</p></div>
+      </div>
+      <p class="takeaway">Tesla and Rivian build their own driver. Most others license theirs: they sell the vehicle once, and the driver’s owner earns on every mile. <b>Phoenix lets every maker and operator <span style="white-space:nowrap">own theirs.</span></b></p>
+      <p class="src">Announced plans. Sources: TechCrunch, Electrek (Sep 2026); WardsAuto (Apr 2026); electrive (Nov 2026); Reuters (Nov 2026).</p>
+    </div>
+  </section>
+
+  <section class="statement">
+    <div class="wrap">
+      <p class="eyebrow">Our view</p>
+      <h2>An AI driver should be owned, not leased.</h2>
+      <p>The makers who build the vehicles and the operators who run them should own the driver inside: the software, the data and the roadmap. We are building the way to get there.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Phoenix</p>
+        <h2>The autonomy compiler.</h2>
+        <p>Phoenix turns a maker’s or operator’s requirements into their own AI driver.</p>
+      </div>
+      <div class="trio">
+        <div class="card r"><h3>Open foundations</h3><p>Built on what the industry already develops together, in the open.</p></div>
+        <div class="card a"><h3>Agentic development</h3><p>Agents do the engineering. Engineers direct and approve.</p></div>
+        <div class="card g"><h3>Evidence built in</h3><p>Ready for approval from the first step, not retrofitted at the end.</p></div>
+      </div>
+      <p class="note">Want the details? <a href="#signup">Request early access</a> and we’ll walk you through it.</p>
+    </div>
+  </section>
+
+
+  <section class="band alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Who it’s for</p>
+        <h2>For anyone who moves people, goods or materials.</h2>
+      </div>
+      <div class="who">
+        <div class="card"><h3>Vehicle makers</h3><p>Established and emerging makers who want to own the AI driver in their product, not lease it from someone else.</p></div>
+        <div class="card"><h3>Fleet operators</h3><p>Public transport, logistics and trucking operators who want driverless operation they control, with their data and roadmap kept in house.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="signup">
+    <div class="wrap signup">
+      <div class="head">
+        <p class="eyebrow">Early access</p>
+        <h2>Be first to see Phoenix.</h2>
+        <p>Leave your details and we’ll be in touch about early access and pilots. Investors: tell us and we’ll walk you through our pre-seed round and dataroom. No newsletters, no spam.</p>
+      </div>
+      <div class="formbox">
+        <div class="hs-form-frame" data-region="eu1" data-form-id="a1b7825b-d032-4bb7-97a2-ad974511053b" data-portal-id="147936703"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <span>© 2026 Open Autonomy · Zürich, Switzerland</span>
+      <nav><a href="#impressum">Impressum</a><a href="#privacy">Privacy</a><a href="#" id="cookie-settings">Cookie settings</a></nav>
+    </div>
+    <details id="impressum">
+      <summary>Impressum</summary>
+      <div class="legal">
+        <p>Open Autonomy Advisors GmbH<br>Dufourstrasse 43<br>8008 Zürich, Switzerland</p>
+        <p>Managing Director: Samet Kütük</p>
+        <p>Commercial register: Canton of Zürich · UID: CHE-261.478.395</p>
+        <p>Contact: info@openautonomy.ch</p>
+      </div>
+    </details>
+    <details id="privacy">
+      <summary>Privacy notice</summary>
+      <div class="legal">
+        <p>Open Autonomy Advisors GmbH (address above) is responsible for the personal data collected on this website. We follow the Swiss Federal Act on Data Protection (FADP) and, where it applies, the EU General Data Protection Regulation (GDPR).</p>
+        <h3>What we collect and why</h3>
+        <p>When you sign up, we collect the details you enter in the form (such as name, email, company and role). We use them only to contact you about Open Autonomy and Phoenix: early access, pilots and investment updates. We do not sell or share them for anyone else’s marketing.</p>
+        <h3>Service providers</h3>
+        <p>Sign-ups are stored in HubSpot (HubSpot Ireland Ltd.), in its EU data centre. The website is hosted on GitHub Pages (GitHub, Inc.), which records visitors’ IP addresses in its server logs for security. Fonts are served from this website itself. These providers process data on our behalf.</p>
+        <h3>Visitor statistics</h3>
+        <p>If you agree in the cookie banner, we use Google Analytics (Google Ireland Ltd.) to count visits and see which pages are read and where visitors come from. Google Analytics then sets cookies in your browser and records your browser, device, approximate location and the pages you view; Google may process this data in the USA. Without your consent, Google Analytics does not run. You can change your choice at any time under “Cookie settings” at the bottom of this page.</p>
+        <h3>How long we keep it</h3>
+        <p>Until you ask us to delete it, or when it is no longer needed for the purpose above.</p>
+        <h3>Your rights</h3>
+        <p>You can ask us for access to your data, its correction or deletion, or withdraw your consent at any time by writing to info@openautonomy.ch.</p>
+        <p>Last updated: November 2026.</p>
+      </div>
+    </details>
+  </div>
+</footer>
+
+<script src="https://js-eu1.hsforms.net/forms/embed/147936703.js" defer></script>
+
+<div id="consent" role="dialog" aria-label="Cookie consent" hidden>
+  <p>We’d like to use Google Analytics cookies to count visits. They only run if you accept. <a href="#privacy">Privacy notice</a></p>
+  <div class="actions">
+    <button type="button" class="btn ghost" data-consent="denied">Decline</button>
+    <button type="button" class="btn" data-consent="granted">Accept</button>
+  </div>
+</div>
+
+<script>
+// Google Analytics (G-S1E9VBRL7B), loaded only after the visitor accepts.
+(function(){
+  var GA_ID="G-S1E9VBRL7B", KEY="oa-analytics-consent", banner=document.getElementById("consent"), loaded=false;
+  function getChoice(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
+  function setChoice(v){ try{ localStorage.setItem(KEY,v); }catch(e){} }
+  function loadGA(){
+    if(loaded) return; loaded=true;
+    window.dataLayer=window.dataLayer||[];
+    window.gtag=function(){ dataLayer.push(arguments); };
+    gtag("js", new Date()); gtag("config", GA_ID);
+    var s=document.createElement("script"); s.async=true; s.src="https://www.googletagmanager.com/gtag/js?id="+GA_ID; document.head.appendChild(s);
+  }
+  function clearGA(){
+    window["ga-disable-"+GA_ID]=true;
+    document.cookie.split(";").forEach(function(c){ var n=c.split("=")[0].trim(); if(/^_ga/.test(n)){ ["", "; domain=.openautonomy.ch", "; domain=openautonomy.ch"].forEach(function(d){ document.cookie=n+"=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"+d; }); } });
+  }
+  banner.addEventListener("click", function(e){
+    var v=e.target.getAttribute("data-consent"); if(!v) return;
+    setChoice(v); banner.hidden=true;
+    if(v==="granted"){ window["ga-disable-"+GA_ID]=false; loadGA(); } else { clearGA(); }
+  });
+  document.getElementById("cookie-settings").addEventListener("click", function(e){ e.preventDefault(); banner.hidden=false; });
+  var c=getChoice();
+  if(c==="granted"){ loadGA(); } else if(c!=="denied"){ banner.hidden=false; }
+})();
+</script>
+
+<script>
+// Open the Impressum or Privacy panel when its footer link is used.
+function openFromHash(){ var d=document.getElementById(location.hash.slice(1)); if(d && d.tagName==="DETAILS"){ d.open=true; } }
+window.addEventListener("hashchange", openFromHash); openFromHash();
+</script>
+
+</body>
+</html>
